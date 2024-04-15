@@ -1,20 +1,35 @@
 import AppName from "./components/AppName";
 import AddTodo from "./components/AddTodo";
 import TodoItems from "./components/TodoItems";
+import Error from "./components/ErrorMessage";
 import "./App.css";
+import { useState } from "react";
 function App() {
-  const todoItems = [
-    { name: "buy milk", dueDate: "10/03/2023" },
-    { name: "Pizza", dueDate: "7/03/2023" },
-    { name: "Samosa", dueDate: "20/03/2023" },
-  ];
+
+
+  const [todoItems, setTodoItems] = useState([]);
+
+  function handleNewItem(itemName, itemDate) {
+    const newTodoItems = [...todoItems, { name: itemName, dueDate: itemDate }];
+    setTodoItems(newTodoItems);
+  }
+
+  function handleDeleteItem(todoItemName){
+
+    const newItem = todoItems.filter((item) => item.name !== todoItemName);
+
+    setTodoItems(newItem);
+
+
+  }
+
   return (
     <center className="todo-container">
       <AppName></AppName>
 
-      <AddTodo></AddTodo>
-<TodoItems todoItems={todoItems}></TodoItems>
-      
+      <AddTodo onNewItem={handleNewItem}></AddTodo>
+      <Error errormessage={todoItems}></Error>
+      <TodoItems todoItems={todoItems} onDeleteClick={handleDeleteItem}></TodoItems>
     </center>
   );
 }

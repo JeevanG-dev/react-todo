@@ -1,9 +1,16 @@
 import {useRef } from "react";
 import { IoIosAddCircle } from "react-icons/io";
-function AddTodo({onNewItem}){
+import { useContext } from "react";
+import { TodoItemsContext } from "../store/todo-items-store";
+
+
+function AddTodo(){
 
     const todoNameElement = useRef()
     const todoDateElement = useRef()
+
+const {NewItem} = useContext(TodoItemsContext);
+
 
 
     function handleAddButton(event){
@@ -13,7 +20,7 @@ const todoName = todoNameElement.current.value;
 const dueDate = todoDateElement.current.value;
 todoNameElement.current.value = "";
 todoDateElement.current.value = "";
-onNewItem(todoName,dueDate)
+NewItem(todoName,dueDate)
 
 
     }
